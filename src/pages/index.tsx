@@ -1,8 +1,17 @@
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { SubscribeButton } from "../components/SubscribeButton";
+import { stripe } from "../services/stripe";
 import styles from "./home.module.scss";
 
-export default function Home() {
+interface HomeProps {
+  product: {
+    priceId: string;
+    amount: number;
+  };
+}
+
+export default function Home({ product }: HomeProps) {
   return (
     <>
       <Head>
@@ -17,9 +26,9 @@ export default function Home() {
           </h1>
           <p>
             Get access to all the publications <br />
-            <span>for $9.90 month</span>
+            <span>for {product.amount} month</span>
           </p>
-          <SubscribeButton />
+          <SubscribeButton priceId={product.priceId} />
         </section>
 
         <img src="/images/avatar.svg" alt="Girl coding" />
@@ -27,3 +36,25 @@ export default function Home() {
     </>
   );
 }
+
+//chamada API stripe
+export const getServerSideProps: GetServerSideProps = async () => {
+  const price = await stripe.prices.retrieve("price_1IdwvOBMSMco8MvevyYe9AE8", {
+    //quando busca um só valor é retrieve
+    expand: ["product"], //vou ter todas as informações do produto, por preço, imagem, descrição(não é necessario colocar quando a somente um produto)
+  });
+
+  const product = {
+    priceId: price.id,
+    amount: new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(price.unit_amount / 100),
+  }; // salvar em centavos, mais facil de lidar não precisa lidar com as casas decimais, quando salva em centavos o numeros sempre vai ser inteiro, e como ta em centavos divido ele por 100
+
+  return {
+    props: {
+      product,
+    },
+  };
+};
