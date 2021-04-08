@@ -4,6 +4,15 @@ import { SubscribeButton } from "../components/SubscribeButton";
 import { stripe } from "../services/stripe";
 import styles from "./home.module.scss";
 
+// 3 formas de fazer uma chamada API
+// -> Client_side- quando não preciso de indexação, quando é uma informação carregada atraves de uma ação do ususario e não
+// necessariamente quando a pagina carrega, uma informação que não tem a necessidade de ja estar ali quando a pagina é carregada
+// -> Server-side- vai ser utilizado quando precisamos tambem a indexação, porem precisamos de dados dinamicos da sessão
+// do usuario, ações em tempo real do usuario que esta acessando, do contexto da requisição.
+// -> Static Site Generation- vamos utilizar em casos que eu consigo gerar uma
+// pagina html para compartilhar esse html para todas as pessoas que estaão acessando aquela aplicação
+// (paginas que são iguais para todo mundo e precisam de indexação do google).
+
 interface HomeProps {
   product: {
     priceId: string;
@@ -60,3 +69,12 @@ export const getStaticProps: GetStaticProps = async () => {
     // quanto tempo em segundos eu quero que essa pagina se mantenha sem precisar ser revalidada(recostruida)
   };
 };
+/* Diferença entre SSR( Server-side Rendering) e SSG(Static Site Generation)
+-> Enquanto SSG ele executa uma vez e depois salva o resultado do html de forma estatica ou seja não muda mais ate dar 
+o tempo do revalidate, é mais perfomatico, ele salva o html e não precisa fazer toda a chamada do 0,
+eu so posso usar SSG se a pagina for igual para todos os usuarios 
+
+-> Enquanto o SSR faz todo o processo do 0 de novo, e permite ser mais dinamico, posso usar informações dinamicas dependendo 
+do usuario(ex: pegar dados somente do usuario que esta logado)
+
+*/
