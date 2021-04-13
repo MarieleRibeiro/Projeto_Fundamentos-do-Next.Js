@@ -12,9 +12,6 @@ export default NextAuth({
       scope: "read:user",
     }),
   ],
-  jwt: {
-    signingKey: process.env.SINGING_KEY,
-  },
 
   callbacks: {
     // são basicamente funções que são executadas de forma automatica pelo nextAuth assim que acontece uma ação
@@ -23,7 +20,35 @@ export default NextAuth({
       const { email } = user;
 
       try {
-        await fauna.query(q.Create(q.Collection("users"), { data: { email } }));
+        await fauna.query(
+          q.If(
+            //se
+            q.Not(
+              // não
+              q.Exists(
+                // existe
+                q.Match(
+                  // um usuario
+                  q.Index("user_by_email"), // por email que bate
+                  q.Casefold(user.email) // com esse email aqui
+                )
+              )
+            ),
+            q.Create(
+              // eu quero criar então
+              q.Collection("users"), // na collection usuarios
+              { data: { email } } // um usuario com esse email aqui
+            ), // senão
+            q.Get(
+              // busca
+              q.Match(
+                // um usuario que bate com esse email
+                q.Index("user_by_email"),
+                q.Casefold(user.email)
+              )
+            )
+          )
+        );
         return true;
       } catch {
         return false;
