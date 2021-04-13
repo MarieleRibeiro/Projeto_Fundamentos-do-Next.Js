@@ -1,6 +1,9 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 
+import { query as q } from "faunadb";
+import { fauna } from "../../../services/fauna";
+
 export default NextAuth({
   providers: [
     Providers.GitHub({
@@ -9,7 +12,25 @@ export default NextAuth({
       scope: "read:user",
     }),
   ],
-});
+  jwt: {
+    signingKey: process.env.SINGING_KEY,
+  },
+
+  callbacks: {
+    // são basicamente funções que são executadas de forma automatica pelo nextAuth assim que acontece uma ação
+    async signIn(user, account, profile) {
+      // exemplo: assim que o usuario logar
+      const { email } = user;
+
+      try {
+        await fauna.query(q.Create(q.Collection("users"), { data: { email } }));
+        return true;
+      } catch {
+        return false;
+      }
+    },
+  },
+}); // o fauna tem seu proprio metodo de escrita das query
 
 // ESTRATÉGIAS DE AUTENTICAÇÃO
 // -> JWT(storange)- geralmente tem uma data de expiração, coloca essa expiração ate baixa pra poder
