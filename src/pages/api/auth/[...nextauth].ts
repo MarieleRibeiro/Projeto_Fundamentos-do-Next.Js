@@ -28,9 +28,9 @@ export default NextAuth({
               q.Exists(
                 // existe
                 q.Match(
-                  // um usuario
+                  // um usuario o qual ele realiza um match(ou seja o if bate)
                   q.Index("user_by_email"), // por email que bate
-                  q.Casefold(user.email) // com esse email aqui
+                  q.Casefold(user.email) // com esse email aqui(casefold->normaliza o email letra maiuscula minuscula)
                 )
               )
             ),
@@ -40,6 +40,7 @@ export default NextAuth({
               { data: { email } } // um usuario com esse email aqui
             ), // senão
             q.Get(
+              // eu vou buscar
               // busca
               q.Match(
                 // um usuario que bate com esse email
