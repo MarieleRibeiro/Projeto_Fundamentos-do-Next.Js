@@ -1,0 +1,36 @@
+JAMStack
+
+=> conceito que foi criado de criar aplicações quase que completas sem precisar
+ necessariamente de uma uma estrutura completa de backend
+ -> javascript = vai dar o funcionamento da aplicação 
+ -> api = api de terceiro
+ -> markup = html a estrutura da pagina
+
+ ------------------------------------------------
+
+ CMS (Content Manangement System)
+ -> são projetos que geralmente ja vem com um painel de adminstração pronto
+ que ja consegue criar conteudo la dentro. ex dos antigos 
+.wordpress
+.drupal não se utiliza mais
+.joomla não se utiliza mais
+.magento (E-commerce)
+
+=> agora temos novos CMS com o conceito de Headless CMS ->  que é um cms como os antigos mas que não tem a parte 
+visual para quem vai consumir o conteudo, ele tem a parte visual apenas do painel de administração 
+(painel de administração + api )são um painel de administração e todos os dados são servidos de uma api HTTP, GraphQL, SDK
+
+=>exemplos de alguns gratuitos 
+- Strapi (qualquer conteudo,aplicação(projetos menores))
+- Ghost (Blog)
+- keystone (qualquer conteudo,aplicação)
+
+=>pagos 
+-GraphCMS 
+-Prismic CMS
+-Contentfull
+
+=> pagos pra E-commerce 
+-Shopify
+-Saleor
+
