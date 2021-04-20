@@ -19,7 +19,7 @@ export default function Posts() {
           </a>
           <a>
             <time>12 de março de 2021</time>
-            <strong>Creating a Monorepo with & Yarn Workspaces</strong>
+            <strong>Creating a Monorepo with, Yarn Workspaces</strong>
             <p>
               In this guide, you will learn how to create a Monorepo to manage
               multiple packages with a shered build, test and release process.
@@ -27,7 +27,7 @@ export default function Posts() {
           </a>
           <a>
             <time>12 de março de 2021</time>
-            <strong>Creating a Monorepo with & Yarn Workspaces</strong>
+            <strong>Creating a Monorepo with, Yarn Workspaces</strong>
             <p>
               In this guide, you will learn how to create a Monorepo to manage
               multiple packages with a shered build, test and release process.
@@ -35,7 +35,7 @@ export default function Posts() {
           </a>
           <a>
             <time>12 de março de 2021</time>
-            <strong>Creating a Monorepo with & Yarn Workspaces</strong>
+            <strong>Creating a Monorepo with, Yarn Workspaces</strong>
             <p>
               In this guide, you will learn how to create a Monorepo to manage
               multiple packages with a shered build, test and release process.
