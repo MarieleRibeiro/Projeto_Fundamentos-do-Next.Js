@@ -54,7 +54,7 @@ export default function PostPreview({ post }: PostPreviewProps) {
 }
 export const getStaticPaths = () => {
   return {
-    paths: [],
+    paths: [], // me retorna qual caminhos/paginas estaticas eu quero gerar durante a build, vazio para que todas as paginas sejam carregadas no primeiro acesso
     fallback: "blocking",
   };
 };
@@ -83,5 +83,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       post,
     },
+    redirect: 60 * 30, // 30 minutos (quanto tempo para o post atualizar)
   };
 };
