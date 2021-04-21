@@ -1,4 +1,5 @@
 import { useSession, signIn } from "next-auth/client";
+import { useRouter } from "next/router";
 import { api } from "../../services/api";
 import { getStripeJs } from "../../services/stripe-js";
 import styles from "./styles.module.scss";
@@ -9,6 +10,8 @@ interface SubscribeButtonProps {
 
 export function SubscribeButton({ priceId }: SubscribeButtonProps) {
   const [session] = useSession(); // saber se o usuario esta logado
+  const router = useRouter(); // sempre que eu precisar redirecionar o usuario de forma programatica por uma função
+  // e não por um botão que ele clica ou um link sempre uso o useRouter que pode ser usado em qualquer componente
 
   async function handleSubscribe() {
     if (!session) {
@@ -17,6 +20,11 @@ export function SubscribeButton({ priceId }: SubscribeButtonProps) {
       return; // não quero que o codigo a partir desse aqui seja executado
     }
     //se ele ja esta logado eu vou fazer a criação da checkout session
+
+    // if (session.activeSubscription) {
+    //   router.push("/posts");
+    //   return;
+    // } -> dando erro activeSubscription
 
     try {
       const response = await api.post("/subscribe");
